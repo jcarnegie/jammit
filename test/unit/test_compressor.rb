@@ -20,5 +20,4 @@ class CompressorTest < Test::Unit::TestCase
     packed = @compressor.compile_jst(glob('test/fixtures/src/*.jst'))
     assert packed == File.read('test/fixtures/jammed/jst_test.js')
   end
-
 end

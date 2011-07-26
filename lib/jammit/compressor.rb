@@ -94,14 +94,15 @@ module Jammit
     # JST-compilation function to the top of the package, unless you've
     # specified your own preferred function, or turned it off.
     # JST templates are named with the basename of their file.
-    def compile_jst(paths)
-      namespace   = Jammit.template_namespace
-      paths       = paths.grep(Jammit.template_extension_matcher).sort
-      base_path   = find_base_path(paths)
-      compiled    = paths.map do |path|
-        contents  = read_binary_file(path)
-        contents  = contents.gsub(/\r?\n/, "\\n").gsub("'", '\\\\\'')
-        name      = template_name(path, base_path)
+    def compile_jst(paths, package=nil)
+      namespace     = Jammit.template_namespace
+      template_root = Jammit.template_roots[package]
+      paths         = paths.grep(Jammit.template_extension_matcher).sort
+      base_path     = find_base_path(paths)
+      compiled      = paths.map do |path|
+        contents    = read_binary_file(path)
+        contents    = contents.gsub(/\r?\n/, "\\n").gsub("'", '\\\\\'')
+        name        = template_name(path, base_path, template_root)
         "#{namespace}['#{name}'] = #{Jammit.template_function}('#{contents}');"
       end
       compiler = Jammit.include_jst_script ? read_binary_file(DEFAULT_JST_SCRIPT) : '';
@@ -128,7 +129,13 @@ module Jammit
 
     # Determine the name of a JS template. If there's a common base path, use
     # the namespaced prefix. Otherwise, simply use the filename.
-    def template_name(path, base_path)
+    def template_name(path, base_path, template_root=nil)
+      if template_root
+        root = File.join(RAILS_ROOT, template_root)
+        path = path.sub(/#{root}/, "")
+        dir  = File.dirname(path)
+        return File.join(dir, File.basename(path, ".#{Jammit.template_extension}"))
+      end
       return File.basename(path, ".#{Jammit.template_extension}") unless base_path
       path.gsub(/\A#{Regexp.escape(base_path)}\/(.*)\.#{Jammit.template_extension}\Z/, '\1')
     end

@@ -87,7 +87,7 @@ module Jammit
 
     # Return the compiled contents of a JST package.
     def pack_templates(package)
-      @compressor.compile_jst(package_for(package, :js)[:paths])
+      @compressor.compile_jst(package_for(package, :js)[:paths], package)
     end
 
     private

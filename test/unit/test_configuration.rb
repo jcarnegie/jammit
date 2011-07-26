@@ -51,12 +51,19 @@ class BrokenConfigurationTest < Test::Unit::TestCase
     packed = Compressor.new.compress_css(glob('test/fixtures/src/*.css'))
     assert packed == File.read('test/fixtures/jammed/css_test-line-break.css')
   end
+  
+  def test_template_roots
+    Jammit.load_configuration('test/config/assets-template-roots.yml')
+    assert Jammit.template_roots
+    assert Jammit.template_roots["workspace"] == "app/views"
+    assert Jammit.template_roots["test"] == "public/javascripts/app/views"
+  end
 
   def test_javascript_compression
     packed = @compressor.compress_js(glob('test/fixtures/src/*.js'))
     assert packed == File.read('test/fixtures/jammed/js_test.js')
   end
-
+  
   def test_jst_compilation
     packed = @compressor.compile_jst(glob('test/fixtures/src/*.jst'))
     assert packed == File.read('test/fixtures/jammed/jst_test.js')

@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
-  s.name      = 'jammit'
-  s.version   = '0.6.3'         # Keep version in sync with jammit.rb
-  s.date      = '2011-05-26'
+  s.name      = 'jammit-jcarnegie'
+  s.version   = '0.0.3'         # Keep version in sync with jammit.rb
+  s.date      = '2011-07-25'
 
   s.homepage    = "http://documentcloud.github.com/jammit/"
   s.summary     = "Industrial Strength Asset Packaging for Rails"
@@ -13,9 +13,9 @@ Gem::Specification.new do |s|
     Data-URI / MHTML image embedding.
   EOS
 
-  s.authors           = ['Jeremy Ashkenas']
-  s.email             = 'jeremy@documentcloud.org'
-  s.rubyforge_project = 'jammit'
+  s.authors           = ['Jeremy Ashkenas', 'Jeff Carnegie']
+  s.email             = 'jeff@newpoetrystudios'
+  s.rubyforge_project = 'jammit-jcarnegie'
 
   s.require_paths     = ['lib']
   s.executables       = ['jammit']
