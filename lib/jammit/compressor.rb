@@ -96,7 +96,7 @@ module Jammit
     # JST templates are named with the basename of their file.
     def compile_jst(paths, package=nil)
       namespace     = Jammit.template_namespace
-      template_root = Jammit.template_roots[package]
+      template_root = Jammit.template_roots[package.to_s]
       paths         = paths.grep(Jammit.template_extension_matcher).sort
       base_path     = find_base_path(paths)
       compiled      = paths.map do |path|
